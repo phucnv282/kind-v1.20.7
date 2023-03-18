@@ -1,0 +1,62 @@
+persistence:
+  enabled: true
+
+dashboards:
+  default:
+    nginx-ingress:
+      gnetId: 9614
+      datasource: Prometheus
+
+    # envoy egress
+    # envoy-clusters:
+    #   gnetId: 11021
+    #   datasource: Prometheus
+    # envoy-global:
+    #   gnetId: 11022
+    #   datasource: Prometheus
+    # envoy-proxy:
+    #   gnetId: 6693
+    #   datasource: Prometheus
+    # envoy-service-fangdd:
+    #   gnetId: 7250
+    #   datasource: Prometheus
+    # envoy-global-fangdd:
+    #   gnetId: 7253
+    #   datasource: Prometheus
+
+dashboardProviders:
+  dashboardproviders.yaml:
+    apiVersion: 1
+    providers:
+      - name: "default"
+        orgId: 1
+        folder: ""
+        type: file
+        disableDeletion: false
+        editable: true
+        options:
+          path: /var/lib/grafana/dashboards/default
+
+datasources:
+  datasources.yaml:
+    apiVersion: 1
+    datasources:
+      - name: Prometheus
+        type: prometheus
+        url: http://kube-prometheus-stack-prometheus.kube-prometheus-stack:9090
+        access: proxy
+        isDefault: true
+      - name: Loki
+        type: loki
+        url: http://loki-stack.loki-stack:3100
+        access: proxy
+
+ingress:
+  enabled: true
+  annotations:
+    kubernetes.io/ingress.class: "nginx"
+    nginx.ingress.kubernetes.io/enable-modsecurity: "false"
+  hosts:
+    - grafana1.cluster.local
+
+adminPassword: "123456qwerty"

@@ -1,0 +1,23 @@
+clusterName: elasticsearch
+
+roles:
+  master: "true"
+  ingest: "true"
+  data: "true"
+
+esJavaOpts: "-Xmx4g -Xms4g"
+
+protocol: http
+
+resources:
+  requests:
+    cpu: 100m
+    memory: 1Gi
+  limits:
+    memory: 5Gi
+
+volumeClaimTemplate:
+  accessModes: ["ReadWriteOnce"]
+  resources:
+    requests:
+      storage: 2Gi

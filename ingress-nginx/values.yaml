@@ -1,0 +1,51 @@
+controller:
+  config:
+    #   custom-http-errors: "432"
+    enable-modsecurity: "true"
+    enable-owasp-modsecurity-crs: "true"
+    modsecurity-snippet: |-
+      SecRuleEngine DetectionOnly
+      # SecRuleEngine On
+
+      SecRequestBodyAccess On
+
+      SecAuditEngine RelevantOnly
+      SecAuditLogParts ABIJDEFHZ
+      SecAuditLog /dev/stdout
+      SecAuditLogType Serial
+
+      SecRule REMOTE_ADDR "@ipMatch 127.0.0.1" "id:100000,phase:1,pass,nolog,ctl:ruleEngine=Off"
+  #
+  #     SecRequestBodyAccess On
+  #
+  #     # SecDebugLog /var/log/modsec_debug.log
+  #     # SecDebugLogLevel 9
+  #
+  #     # SecDefaultAction "phase:1,deny,log,status:432"
+  #     # SecDefaultAction "phase:2,deny,log,status:432"
+  #
+  #     SecAuditEngine RelevantOnly
+  #     # SecAuditLogRelevantStatus "^(?:5|4(?!04))"
+  #
+  #     # Log everything we know about a transaction.
+  #     SecAuditLogParts ABIJDEFHZ
+  #
+  #     # Use a single file for logging. This is much easier to look at, but
+  #     # assumes that you will use the audit log only ocassionally.
+  #     #
+  #     SecAuditLogType Serial
+  #     SecAuditLog /dev/stdout
+  #
+  #     # Include /etc/nginx/modsecurity/rules/*.conf
+
+  service:
+    type: NodePort
+
+    nodePorts:
+      http: 32080
+      https: 32443
+
+  metrics:
+    enabled: true
+    serviceMonitor:
+      enabled: true

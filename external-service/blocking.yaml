@@ -1,0 +1,16 @@
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: default-deny-external-egress
+  namespace: default
+spec:
+  podSelector: {}
+  policyTypes:
+    - Egress
+  egress:
+    - to:
+        - ipBlock:
+            # ensure your internal IP range is allowed here
+            # traffic to external IPs will not be allowed from this namespace.
+            # therefore, pods will have to use egress gateways
+            cidr: 10.0.0.0/8

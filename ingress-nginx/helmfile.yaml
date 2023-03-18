@@ -1,0 +1,7 @@
+releases:
+  - name: ingress-nginx
+    chart: ingress-nginx/ingress-nginx
+    version: 4.0.17
+    namespace: ingress-nginx
+    values:
+      - values.yaml

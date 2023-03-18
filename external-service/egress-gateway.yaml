@@ -1,0 +1,28 @@
+apiVersion: egress.monzo.com/v1
+kind: ExternalService
+metadata:
+  name: egress-gateway
+spec:
+  dnsName:
+    - reqbin.com
+    - www.google.com
+  # optional, defaults to false, instructs dns server to rewrite queries for dnsName
+  hijackDns: true
+  ports:
+    - port: 443
+      # optional, defaults to TCP
+      protocol: TCP
+  # optional, defaults to 3
+  minReplicas: 3
+  # optional, defaults to 12
+  maxReplicas: 5
+  # optional, defaults to 50
+  targetCPUUtilizationPercentage: 30
+  # optional, if not provided then defaults to 100m, 50Mi, 2, 1Gi
+  resources:
+    requests:
+      cpu: 100m
+      memory: 100Mi
+    limits:
+      cpu: 500m
+      memory: 200Mi

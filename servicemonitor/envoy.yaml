@@ -1,0 +1,15 @@
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  name: envoy
+  labels:
+    team: gateway
+  namespace: egress-operator-system
+spec:
+  selector:
+    matchLabels:
+      app: egress-gateway
+  endpoints:
+  - port: admin
+    path: /stats/prometheus
+    interval: 10s

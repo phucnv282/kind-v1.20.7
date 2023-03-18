@@ -1,0 +1,8 @@
+releases:
+  - name: es-practice
+    namespace: es-practice
+    values:
+    - ./values.yaml
+    # chart: teko/teko-elasticsearch-v2
+    chart: elastic/elasticsearch
+    version: 7.5.1

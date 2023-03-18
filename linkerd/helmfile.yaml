@@ -1,0 +1,20 @@
+repositories:
+  - name: linkerd
+    url: https://helm.linkerd.io/stable
+
+releases:
+  - name: linkerd-crds
+    chart: linkerd/linkerd-crds
+    version: 1.4.0
+    namespace: linkerd
+  - name: linkerd-control-plane
+    chart: linkerd/linkerd-control-plane
+    version: 1.9.4
+    namespace: linkerd
+    set:
+      - name: identityTrustAnchorsPEM
+        file: certs/ca.crt
+      - name: identity.issuer.tls.crtPEM
+        file: certs/issuer.crt
+      - name: identity.issuer.tls.keyPEM
+        file: certs/issuer.key
